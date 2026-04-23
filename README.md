@@ -3,7 +3,7 @@
 **Project Goal :** Predict hourly power demand for 2024. To do this, I trained a model on previous year grid usage (2016-2023) and I also factored in the weather and economic data of these years and how they affect the demand.
 
 **Final Selected Model :** LightGBM Regressor  
-**MAPE of Selected Model :** 2.61% (Mean Absolute Percentage Error)
+**MAPE of Selected Model :** 2.46% (Mean Absolute Percentage Error)
 
 ---
 ## How I Built It (Methodology)
@@ -29,7 +29,7 @@ I didn't just pick one algorithm; I benchmarked three different ones on a strict
 
 | Model | Architecture Type | Test MAPE (2024) | Notes |
 | :--- | :--- | :--- | :--- |
-| **LightGBM** | Boosting (Leaf-wise) | **~2.61%** | **Winner!!!** It was the fastest to train and caught the hourly trends perfectly. |
+| **LightGBM** | Boosting (Leaf-wise) | **~2.46%** | **Winner!!!** It was the fastest to train and caught the hourly trends perfectly. |
 | **Random Forest** | Bagging | ~2.73% | Very stable and ignored the noisy data well, but it missed some of the sharper daily peaks. |
 | **XGBoost** | Boosting (Level-wise) | ~2.77% | A solid baseline, but LightGBM's leaf-wise tree growth worked a bit better for this specific data. |
 
@@ -38,9 +38,9 @@ I didn't just pick one algorithm; I benchmarked three different ones on a strict
 
 ## 🔬 The Failed Experiment (Ablation Study)
 
-After hitting a 2.61% error rate with LightGBM, I tried to make it even better. I added a 168-hour (1 week) lag and slowed down the learning rate to `0.01` with also increasing the trees to 2,000 and early stopping.
+After hitting a 2.46% error rate with LightGBM, I tried to make it even better. I added a 168-hour (1 week) lag and slowed down the learning rate to `0.01` with also increasing the trees to 2,000 and early stopping.
 
-**It actually got worse (2.66% MAPE).** Why? The early stopping triggered at just 183 trees, meaning the model *underfit* the data. Plus, the 1-week lag probably confused the model whenever a holiday or weird weather event didn't line up perfectly with the week before. 
+**It actually got worse (2.46% MAPE).** Why? The early stopping triggered at just 183 trees, meaning the model *underfit* the data. Plus, the 1-week lag probably confused the model whenever a holiday or weird weather event didn't line up perfectly with the week before. 
 
 So, I went back to my original simpler LightGBM model. It proved that for this grid data, a strong, simple baseline with 24-hour lags beats a wildly complex setup!
 
