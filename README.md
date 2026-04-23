@@ -40,7 +40,7 @@ I didn't just pick one algorithm; I benchmarked three different ones on a strict
 
 After hitting a 2.46% error rate with LightGBM, I tried to make it even better. I added a 168-hour (1 week) lag and slowed down the learning rate to `0.01` with also increasing the trees to 2,000 and early stopping.
 
-**It actually got worse (2.46% MAPE).** Why? The early stopping triggered at just 183 trees, meaning the model *underfit* the data. Plus, the 1-week lag probably confused the model whenever a holiday or weird weather event didn't line up perfectly with the week before. 
+**It actually got worse (2.54% MAPE).** Why? The early stopping triggered at just 183 trees, meaning the model *underfit* the data. Plus, the 1-week lag probably confused the model whenever a holiday or weird weather event didn't line up perfectly with the week before. 
 
 So, I went back to my original simpler LightGBM model. It proved that for this grid data, a strong, simple baseline with 24-hour lags beats a wildly complex setup!
 
